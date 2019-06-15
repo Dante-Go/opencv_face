@@ -12,7 +12,11 @@ def generate():
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
         for (x, y, w, h) in faces:
             img = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-            f = cv2.resize(gray[y:y+h, x:x+w], (200, 200))
+            roi_gray = gray[y:y+h, x:x+w]
+            eyes = eye_cascade.detectMultiScale(roi_gray, 1.03, 5, 0, (40, 40))
+            for (ex, ey, ew, eh) in eyes:
+                cv2.rectangle(img, (x+ex, y+ey), (x+ex+ew, y+ey+eh), (0, 255, 0), 2)
+            f = cv2.resize(roi_gray, (200, 200))
             cv2.imwrite('../tmp_imgs/face_data/%s.pgm' % str(count), f)
             print(count)
             count += 1
