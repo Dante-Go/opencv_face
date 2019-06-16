@@ -12,8 +12,8 @@ if __name__ == '__main__':
     indexParams = dict(algorithm=0, trees=5)
     searchParams = dict(checks=50)
     flann = cv2.FlannBasedMatcher(indexParams, searchParams)
-    matches = flann.knnMatch(des1, des2, k=1)
-    matchesMask = [[0, 0] for i in np.xrange(len(matches))]
+    matches = flann.knnMatch(des1, des2, k=2)
+    matchesMask = [[0, 0] for i in range(len(matches))]
     # David G. Lowe's ratio test, populate the mask
     for i,(m,n) in enumerate(matches):
         if m.distance < 0.7 * n.distance:
@@ -23,6 +23,6 @@ if __name__ == '__main__':
                       singlePointColor=(255, 0, 0),
                       matchesMask=matchesMask,
                       flags=0)
-    resultImage = cv2.drawMatchesKnn(queryImage, kp1, trainingImage, kp2, matches, **drawParams)
+    resultImage = cv2.drawMatchesKnn(queryImage, kp1, trainingImage, kp2, matches, None, **drawParams)
     plt.imshow(resultImage)
     plt.show()
