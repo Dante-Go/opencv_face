@@ -11,6 +11,7 @@ __pycache__/
 
 #my data
 tmp_imgs/face_data/LK/*
+*.csv
 
 # Distribution / packaging
 .Python
